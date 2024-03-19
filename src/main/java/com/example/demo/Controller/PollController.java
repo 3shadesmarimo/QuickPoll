@@ -1,6 +1,9 @@
 package com.example.demo.Controller;
 
+
+
 import com.example.demo.Domain.Poll;
+import com.example.demo.Exception.ResourceNotFoundException;
 import com.example.demo.Repository.PollRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -8,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 public class PollController {
@@ -38,22 +43,32 @@ public class PollController {
         return new ResponseEntity<>(allPolls, HttpStatus.OK);
     }
 
+    @GetMapping("/polls/{pollId}")
+    public ResponseEntity<?> getPoll(@PathVariable Long pollId) {
+
+        return new ResponseEntity<>(verifyPoll(pollId), HttpStatus.OK);
+    }
     @PutMapping("/polls/{pollId}")
     public ResponseEntity<?> updatePoll(@RequestParam Poll poll, @PathVariable Long pollId) {
         //Save the entity
+        verifyPoll(pollId);
         pollRepository.save(poll);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/polls/{pollId}")
     public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
+        verifyPoll(pollId);
         pollRepository.deleteById(pollId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/polls/{pollId}")
-    public ResponseEntity<?> getPoll(@PathVariable Long pollId) {
-        Optional<Poll> poll =
+    protected Poll verifyPoll(Long pollId) throws ResourceNotFoundException {
+        Optional<Poll> poll = pollRepository.findById(pollId);
+        if(!poll.isPresent()) {
+            throw new ResourceNotFoundException("Poll with id " + pollId + " is not found.");
+        }
+        return poll.get();
     }
 
 }
