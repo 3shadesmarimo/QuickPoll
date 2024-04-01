@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.example.demo.Controller"})
+
 public class QuickPollApplication {
     public static void main(String[] args) {
         SpringApplication.run(QuickPollApplication.class, args);
