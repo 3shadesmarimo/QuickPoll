@@ -2,6 +2,8 @@ package com.example.demo.Domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +16,13 @@ public class Poll {
     private Long id;
 
     @Column(name = "QUESTION")
+    @NotEmpty
     private String question;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "POLL_ID")
     @OrderBy
+    @Size(min=2, max=6)
     private Set<Option> options;
 
     public Long getId() {

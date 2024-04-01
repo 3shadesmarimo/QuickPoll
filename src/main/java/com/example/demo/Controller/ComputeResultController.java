@@ -7,20 +7,26 @@ import com.example.demo.DTO.OptionCount;
 import com.example.demo.DTO.VoteResult;
 import com.example.demo.Domain.Vote;
 import com.example.demo.Repository.VoteRepository;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestController("computeResultControllerV1")
+@RequestMapping("/v1/")
+@Api(value = "computeresult", description = "Compute Results API")
 public class ComputeResultController {
 
 
+    @Inject
     private final VoteRepository voteRepository;
 
 

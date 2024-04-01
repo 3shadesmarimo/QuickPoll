@@ -1,12 +1,26 @@
 package com.example.demo.DTO.Error;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ErrorDetail {
     private String title;
     private int status;
     private String detail;
     private long timeStamp;
+    private String path;
     private String developerMessage;
 
+    private Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
+
+    public Map<String, List<ValidationError>> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Map<String, List<ValidationError>> errors) {
+        this.errors = errors;
+    }
     public String getTitle(){
         return title;
     }
@@ -37,6 +51,14 @@ public class ErrorDetail {
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getPath(){
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getDeveloperMessage() {
